@@ -9,21 +9,21 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.neighbors import KNeighborsClassifier
 
 
-class CombinerLearner:
+class CombinedLearner:
 
     # Class variables
     # --------------------
-    self.mnb_clf
-    self.knn_clf_k2
-    self.knn_clf_k3
-    self.knn_clf_k5
+    # self.mnb_clf
+    # self.knn_clf_k2
+    # self.knn_clf_k3
+    # self.knn_clf_k5
 
     # Constructor
     # --------------------
     # Takes in the intial training data, and trains the contained learners
     # Xtr: Should be 2d-array N x P, with N=data & P=features
     # Ytr: Should be array of classes
-    def __init__(Xtr: list, Ytr: list):
+    def __init__(self, Xtr: list, Ytr: list):
         self.mnb_clf = MultinomialNB()
         self.mnb_clf.fit(Xtr, Ytr)
 
@@ -41,11 +41,18 @@ class CombinerLearner:
     # --------------------
     # Takes in test data with its classifications, makes the predictions, and uses
     # these to calculate and return the mean-squared-error.
-    def mse(Xte: list, Yte: list) -> float:
-        pass
+    # NOTE: THIS FUNCTION WILL NOT WORK (WILL CAUSE CRASH) WITH NON-NUMBER CLASSES
+    def mse(self, Xte: list, Yte: list) -> float:
+        predictions = self.predict(Xte)
+
+        errors = []
+        for i in range(len(Yte)):
+            errors.append((predictions[i]-Yte[i])**2)
+
+        return sum(errors)/len(errors)
 
     # Makes predictions given some test data, returning a list of the predictions
-    def predict(Xte: list) -> list:
+    def predict(self, Xte: list) -> list:
         mnb = self.mnb_clf.predict(Xte)
         knn2 = self.knn_clf_k2.predict(Xte)
         knn3 = self.knn_clf_k3.predict(Xte)
@@ -53,8 +60,9 @@ class CombinerLearner:
 
         predictions = []
 
-        for i in range(length(mnb)):
+        for i in range(len(mnb)):
             prediction = [mnb[i],knn2[i],knn3[i],knn5[i]]
+            print([mnb[i],knn2[i],knn3[i],knn5[i]])
             predictions.append(max(set(prediction), key=prediction.count))
 
         return predictions
