@@ -55,17 +55,17 @@ class CPUPlayer:
 
     # Public methods
     # --------------------
-    # Makes a move based upon predictions from previous moves
+    # Makes a move based upon predictions from previous 5 moves
     def make_move(self):
         if (self.learner == None):
             return random.choice(MOVES)
 
         else:
-            prediction = self.learner.predict([self.memory_list[-3:]])[0]
+            prediction = self.learner.predict([self.memory_list[-5:]])[0]
 
-            if (prediction == "rock"):
+            if (prediction == 0):
                 return "paper"
-            elif (prediction == "paper"):
+            elif (prediction == 1):
                 return "scissors"
             else:
                 return "rock"

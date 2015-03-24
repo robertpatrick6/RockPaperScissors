@@ -16,7 +16,6 @@ class CombinedLearner:
     # self.mnb_clf
     # self.knn_clf_k2
     # self.knn_clf_k3
-    # self.knn_clf_k5
 
 
     # Constructor
@@ -33,9 +32,6 @@ class CombinedLearner:
         
         self.knn_clf_k3 = KNeighborsClassifier(n_neighbors=3, algorithm='auto')
         self.knn_clf_k3.fit(Xtr, Ytr)
-
-        self.knn_clf_k5 = KNeighborsClassifier(n_neighbors=5, algorithm='auto')
-        self.knn_clf_k5.fit(Xtr, Ytr)
 
 
     # Public methods
@@ -57,13 +53,12 @@ class CombinedLearner:
         mnb = self.mnb_clf.predict(Xte)
         knn2 = self.knn_clf_k2.predict(Xte)
         knn3 = self.knn_clf_k3.predict(Xte)
-        knn5 = self.knn_clf_k5.predict(Xte)
 
         predictions = []
 
         for i in range(len(mnb)):
-            prediction = [mnb[i],knn2[i],knn3[i],knn5[i]]
-            print([mnb[i],knn2[i],knn3[i],knn5[i]])
+            prediction = [mnb[i],knn2[i],knn3[i]]
+            print([mnb[i],knn2[i],knn3[i]])
             predictions.append(max(set(prediction), key=prediction.count))
 
         return predictions
