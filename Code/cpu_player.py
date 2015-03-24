@@ -61,7 +61,14 @@ class CPUPlayer:
             return random.choice(MOVES)
 
         else:
-            return self.learner.predict([self.memory_list[-3:]])[0]
+            prediction = self.learner.predict([self.memory_list[-3:]])[0]
+
+            if (prediction == "rock"):
+                return "paper"
+            elif (prediction == "paper"):
+                return "scissors"
+            else:
+                return "rock"
 
     # Takes the players previous move and adds it to a list to
     # allow for a memory of the previous moves in the game,
