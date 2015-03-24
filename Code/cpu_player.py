@@ -28,7 +28,7 @@ class CPUPlayer:
     def __init__(self):
         self.learner = None
         
-        self.UPDATE_INTERVAL = 10
+        self.UPDATE_INTERVAL = 6
         self.MAX_MOVE_MEMORY = 50
 
         self.current_interval_move = 0
@@ -57,7 +57,7 @@ class CPUPlayer:
     # --------------------
     # Makes a move based upon predictions from previous moves
     def make_move(self):
-        if (self.leaner == None):
+        if (self.learner == None):
             return random.choice(MOVES)
 
         else:
@@ -74,7 +74,12 @@ class CPUPlayer:
     # allow for a memory of the previous moves in the game,
     # up to a certain maximum memory
     def remember_moves(self, player_move):
-        self.memory_list.extend(player_move)
+        if (player_move == "rock"):
+            self.memory_list.append(0)
+        elif (player_move == "paper"):
+            self.memory_list.append(1)
+        else:
+            self.memory_list.append(2)
 
         if (len(self.memory_list) > self.MAX_MOVE_MEMORY):
             self.memory_list = self.memory_list[1:]
