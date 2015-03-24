@@ -73,6 +73,6 @@ class CPUPlayer:
             self.memory_list = self.memory_list[1:]
 
         self.current_interval_move += 1
-        if (self.current_interval_move == self.UPDATE_INTERVAL):
+        if (self.current_interval_move >= self.UPDATE_INTERVAL):
             self.current_interval_move = 0
             self._update_learner()
